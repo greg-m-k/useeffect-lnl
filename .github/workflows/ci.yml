@@ -1,0 +1,30 @@
+# Every push and pull request: unit tests, then the browser walkthrough of every lesson against the
+# local dev server. Deploys nothing and needs no secrets.
+name: ci
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      WRANGLER_SEND_METRICS: "false"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npx vite build
+      - name: Start the site locally
+        run: |
+          npx vite --port 8810 --strictPort > vite-dev.log 2>&1 &
+          for i in $(seq 1 90); do curl -sf http://localhost:8810/effects/race/ > /dev/null && exit 0; sleep 1; done
+          cat vite-dev.log; exit 1
+      - name: Walk every lesson in Chrome
+        run: npm run ui
+        env:
+          CHANNEL: chrome

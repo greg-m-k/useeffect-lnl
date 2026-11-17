@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How rare is the race? · Lunch & Learn</title>
+<link rel="stylesheet" href="/effects/lib/styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='9' cy='16' r='6' fill='%23ea580c'/%3E%3Ccircle cx='23' cy='16' r='6' fill='%232563eb'/%3E%3C/svg%3E">
+</head>
+<body>
+<main>
+  <h1>How rare is the race?</h1>
+  <p class="lead">The race in <a href="/effects/race/">Typing faster than the server</a> depends on latency jitter compared with how
+    fast the input changes. Traffic and server speed do not enter into it. This page types two characters into both search components
+    many times, with real requests, and counts how often each one ends on stale results. Then it multiplies the measured rate by
+    interactions per day. New to these terms? <a href="/effects/start/">Start here</a>.</p>
+
+  <div class="panel">
+    <div class="bar">
+      <button class="primary" id="run">▶ Run the keystroke pairs</button>
+      <label>Connection <select id="profile">
+        <option value="30,5">Wired: steady</option>
+        <option value="60,30">Office Wi-Fi: a little jitter</option>
+        <option value="120,80" selected>Mobile: a lot of jitter</option>
+      </select></label>
+      <label>Pairs <select id="trials"><option>20</option><option selected>40</option><option>100</option><option>200</option></select></label>
+      <span class="status" id="status">Ready</span>
+    </div>
+    <div class="bar">
+      <label>Time between keystrokes, on average <input type="range" id="gap" min="50" max="600" step="10" value="200"><output id="o-gap">200ms</output></label>
+      <label>Debounce <select id="debounce"><option value="0" selected>none</option><option value="300">300ms</option></select></label>
+      <button class="switch" id="slowShort" aria-pressed="false">Shorter queries are slower</button>
+    </div>
+    <p class="status">Each pair types "u", waits a random time averaging the value above and never shorter than a third of it, and
+      types "us". With a debounce, a query is
+      only sent once typing has paused that long. Try mobile, then wired, then mobile with a 300ms debounce. Predict each rate first.</p>
+  </div>
+
+  <div class="cols">
+    <section class="panel" data-color="orange">
+      <h2>Effect without cleanup</h2>
+      <p class="desc">Pairs that ended showing results for "u" instead of "us".</p>
+      <div class="big" id="no-cleanup-rate">–</div>
+      <p class="status" id="no-cleanup-detail"></p>
+    </section>
+    <section class="panel" data-color="blue">
+      <h2>Effect with cleanup</h2>
+      <p class="desc">Same keystrokes, same server delays.</p>
+      <div class="big" id="cleanup-rate">–</div>
+      <p class="status" id="cleanup-detail"></p>
+    </section>
+  </div>
+
+  <div class="panel">
+    <h2>At your scale</h2>
+    <p class="desc">Stale results per day = interactions per day × the rate measured above, for the effect without cleanup.</p>
+    <div class="bar">
+      <label>Internal tool: interactions per day <input id="small" type="number" value="1000" min="1" step="100" style="width:9em"></label>
+      <span class="big" id="small-result">–</span>
+    </div>
+    <div class="bar">
+      <label>Consumer search: interactions per day <input id="large" type="number" value="1000000" min="1" step="1000" style="width:9em"></label>
+      <span class="big" id="large-result">–</span>
+    </div>
+  </div>
+
+  <div class="callout insight">The race is a scale problem: on steady networks it is close to nonexistent, and on mobile networks a
+    few percent of quick searches end on the wrong results. Users rarely report it, because the results look plausible and they type
+    again. Two things do not shrink with scale. The cost of one occurrence: a detail pane whose header says customer B while the form
+    holds customer A's data, and a save that writes A's data to B. And the bugs in <a href="/effects/reset/">Switching users</a> and
+    <a href="/effects/submit/">The order placed twice</a>, which happen every time. For your own app, compare the p95 and p99 latency of
+    the endpoint with how fast its input changes.</div>
+</main>
+<script type="module" src="/effects/lessons/odds.jsx"></script>
+</body>
+</html>

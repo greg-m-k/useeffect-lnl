@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fetch, render, fetch again · Lunch & Learn</title>
+<link rel="stylesheet" href="/effects/lib/styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='9' cy='16' r='6' fill='%23ea580c'/%3E%3Ccircle cx='23' cy='16' r='6' fill='%232563eb'/%3E%3C/svg%3E">
+</head>
+<body>
+<main>
+  <h1>Fetch, render, fetch again</h1>
+  <p class="lead">A customer page needs the customer and their orders, and both requests need only the customer id.
+    <strong data-color="orange">Effects in each component</strong> fetch the customer, render the orders list, and only then does the
+    list's own effect fetch the orders. <strong data-color="blue">Fetching together</strong> starts both requests at once. The server
+    answers each after the delay you set, and the timelines show when each request really started and finished.
+    New to these terms? <a href="/effects/start/">Start here</a>.</p>
+
+  <div class="panel">
+    <div class="bar">
+      <button class="primary" id="run">▶ Load the page both ways</button>
+      <label>Customer <select id="customer"><option value="cust-1">Ada Lovelace</option><option value="cust-2">Grace Hopper</option><option value="cust-3">Edsger Dijkstra</option></select></label>
+      <span class="status" id="status">Ready</span>
+    </div>
+    <div class="bar">
+      <label>Customer request <input type="range" id="ms-customer" min="0" max="1500" step="50" value="300"><output id="o-customer">300ms</output></label>
+      <label>Orders request <input type="range" id="ms-orders" min="0" max="1500" step="50" value="300"><output id="o-orders">300ms</output></label>
+    </div>
+    <p class="status">Try: both at 300ms, then both at 900ms, as on a slow mobile connection. Predict each total first. The two ways run
+      one after the other, so neither slows the other down.</p>
+  </div>
+
+  <div class="cols">
+    <section class="panel" data-color="orange">
+      <h2>Effects in each component</h2>
+      <p class="desc">The orders request starts when the customer request has finished.</p>
+      <div class="pane-title">Timeline (measured)</div>
+      <div class="timeline" id="waterfall-timeline"><p class="status">Run it to see each request.</p></div>
+      <div class="pane-title">The page</div>
+      <div id="waterfall"></div>
+      <div class="pane-title">Code that ran</div>
+      <pre class="source" id="waterfall-code"></pre>
+    </section>
+    <section class="panel" data-color="blue">
+      <h2>Fetching together</h2>
+      <p class="desc">Both requests start at once; the page is ready when the slower one finishes.</p>
+      <div class="pane-title">Timeline (measured)</div>
+      <div class="timeline" id="together-timeline"><p class="status">Run it to see each request.</p></div>
+      <div class="pane-title">The page</div>
+      <div id="together"></div>
+      <div class="pane-title">Code that ran</div>
+      <pre class="source" id="together-code"></pre>
+    </section>
+  </div>
+
+  <div class="callout insight">Each level of nesting adds a full round trip, so the gap grows with latency and with depth. One user on
+    a slow connection feels it on every page load, whatever the server's load. Route loaders, data libraries and server components exist
+    largely to start these requests together, before the components that need them render.</div>
+</main>
+<script type="module" src="/effects/lessons/waterfall.jsx"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Start here: Is useEffect a Code Smell? · Lunch & Learn</title>
+<link rel="stylesheet" href="/effects/lib/styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='9' cy='16' r='6' fill='%23ea580c'/%3E%3Ccircle cx='23' cy='16' r='6' fill='%232563eb'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="prose">
+  <h1>Is useEffect a Code Smell?</h1>
+  <p class="lead">"useEffect is a code smell" overstates a narrower point that holds up. This page sets out what effects are for,
+    where the slogan comes from, and the words the lessons use. The lessons after it run each misuse next to its fix, so you can
+    see the bugs happen and count them.</p>
+
+  <h2>The short answer</h2>
+  <p>Effects are the right tool for <strong>syncing with something outside React</strong>: subscriptions, timers, sockets, browser
+    and DOM APIs, a network request that must follow the screen. They cause bugs when they become a general "when X changes, do Y"
+    mechanism, in particular to <strong>compute derived state</strong> or to <strong>respond to something the user did</strong>.</p>
+  <p>A common reply to the slogan is that effect bugs only matter under heavy load. The lessons test that reply. Two of the four bugs
+    happen every time, at any scale. The other two depend on the network and on how fast people type and click, and one user on a
+    poor connection is enough.</p>
+
+  <div class="cols">
+    <section class="panel" data-color="orange">
+      <h2>Effects as "when X changes, do Y"</h2>
+      <p>State changes, an effect notices, and the effect sets more state, sends a request or fires an event. Each effect looks
+        reasonable alone. Together they make behaviour depend on the order and timing of renders, which the code does not show.</p>
+    </section>
+    <section class="panel" data-color="blue">
+      <h2>Effects for syncing, and nothing else</h2>
+      <p>Values computed from props and state are computed during render. Things the user did are handled in the event handler.
+        Effects remain for keeping React in step with an outside system, and every such effect has a cleanup.</p>
+    </section>
+  </div>
+
+  <h2>Where the slogan comes from</h2>
+  <ul>
+    <li><strong>The React docs' page "You Might Not Need an Effect".</strong> It lists specific misuses and their replacements. The title
+      travelled further than the list.</li>
+    <li><strong>Strict Mode in React 18 and later.</strong> In development, React mounts every component twice to expose effects that
+      lack cleanup. People saw every request sent twice and blamed effects.</li>
+    <li><strong>Dependency arrays.</strong> A missing dependency gives stale values; a dependency that changes every render gives an
+      endless loop. The lint rule that checks them is a constant argument.</li>
+    <li><strong>Data fetching moved elsewhere.</strong> Data libraries such as React Query, framework route loaders and server components
+      took over most fetching. "Do not fetch in effects" drifted into "effects are bad".</li>
+  </ul>
+
+  <h2>Terms</h2>
+  <dl>
+    <dt>Render</dt><dd>React calling your component function to work out what the screen should show. It should only calculate.</dd>
+    <dt>Commit</dt><dd>React applying the result of a render to the DOM. A commit can happen and be replaced before the browser paints it.</dd>
+    <dt>Paint</dt><dd>The browser drawing the DOM on screen. What the user sees.</dd>
+    <dt>Effect</dt><dd>A function passed to <code>useEffect</code>. React runs it after a commit, usually after the browser has painted.</dd>
+    <dt>Dependency array</dt><dd>The list after the effect. React runs the effect again when any value in it changes.</dd>
+    <dt>Cleanup</dt><dd>The function an effect returns. React runs it before running the effect again and when the component goes away.</dd>
+    <dt>Mount and unmount</dt><dd>A component appearing in the tree, and leaving it. Navigating away and back unmounts and mounts it again.</dd>
+    <dt>Derived state</dt><dd>A value that can be calculated from props or other state. Storing it in state and syncing it with an effect adds a render and a chance to be wrong.</dd>
+    <dt>Key</dt><dd>A prop that tells React which component instance is which. A new key throws the old instance and its state away.</dd>
+    <dt>Race condition</dt><dd>A bug that depends on which of two things finishes first. Here: which of two requests answers last.</dd>
+    <dt>Latency jitter</dt><dd>How much the time to answer varies from one request to the next. Mobile connections have far more than wired ones.</dd>
+    <dt>Debounce</dt><dd>Waiting until the input has been still for a while before acting on it, so a burst of keystrokes sends one request.</dd>
+    <dt>Waterfall</dt><dd>Requests that run one after another because each is started by the previous one finishing.</dd>
+  </dl>
+
+  <h2>A working rule</h2>
+  <p>If the effect talks to something outside React, keep it and give it a cleanup. If it only computes a value from props or state,
+    compute it during render, with <code>useMemo</code> if it is expensive. If it reacts to something the user did, move it into the
+    event handler.</p>
+</main>
+<script type="module" src="/effects/lessons/prose.js"></script>
+</body>
+</html>

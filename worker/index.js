@@ -11,6 +11,9 @@
 // Orders are counted per visitor (the x-lnl-session header) in a Durable Object and deleted
 // 20 minutes after the visitor's last order.
 import { DurableObject } from "cloudflare:workers";
+import { latency } from "./latency.js";
+
+export { latency };
 
 const MAX_MS = 3000;
 const SESSION = /^[a-z0-9-]{8,64}$/;
@@ -50,16 +53,6 @@ export function parseSearch(url) {
     slowShort: q.get("slowShort") === "1",
     delay: q.has("delay") ? clamp(number(q.get("delay"), 0), 0, MAX_MS) : null,
   };
-}
-
-// How long the server waits. A fixed delay if one is given; otherwise the base plus a random,
-// long-tailed extra (exponential, mean = jitter), plus extra for short queries when slowShort is
-// on, because short queries match more rows. random is passed in so tests can pin it.
-export function latency({ q, base, jitter, slowShort, delay }, random = Math.random) {
-  if (delay != null) return delay;
-  const tail = jitter > 0 ? -jitter * Math.log(1 - random()) : 0;
-  const short = slowShort ? Math.max(0, 6 - q.length) * 60 : 0;
-  return Math.round(clamp(base + tail + short, 0, MAX_MS));
 }
 
 export function search(q) {

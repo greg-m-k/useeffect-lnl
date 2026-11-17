@@ -1,0 +1,32 @@
+{
+  "title": "Lunch & Learn",
+  "repo": "https://github.com/greg-m-k/useeffect-lnl",
+  "intro": "A Lunch & Learn is a format: one design question a team keeps debating, every answer to it built for real, and an hour to try them side by side. Nothing here is mocked. Every request really goes to a server and every number is measured while you watch.",
+  "origin": { "text": "The format comes from Sam Peterson's Lunch & Learn, the original site of this kind:", "url": "https://lnl.sam-peterson.com" },
+  "author": { "name": "Greg Kitchen", "url": "https://greg.kitchen" },
+  "topics": [
+    {
+      "slug": "effects",
+      "emoji": "🪝",
+      "title": "Is useEffect a Code Smell?",
+      "summary": "\"useEffect is a code smell\" overstates a narrower point. Effects are the right tool for syncing with something outside React, and a source of bugs when used as a general \"when X changes, do Y\". These lessons run each misuse next to its fix, in real React against a real server, and measure the difference.",
+      "source": "app/effects",
+      "lessons": [
+        { "path": "/effects/start/", "title": "Start here: the claim and where it comes from", "chip": "Start here",
+          "blurb": "What effects are for, where the slogan comes from, and every term the lessons use." },
+        { "path": "/effects/race/", "title": "Typing faster than the server", "chip": "Typing faster than the server",
+          "blurb": "Search as you type. An older answer lands last and the page shows results for the wrong query." },
+        { "path": "/effects/reset/", "title": "Switching users", "chip": "Switching users",
+          "blurb": "Reset state in an effect and one commit shows the previous user's draft. Every time." },
+        { "path": "/effects/submit/", "title": "The order placed twice", "chip": "The order placed twice",
+          "blurb": "Place an order from an effect, leave, come back, and count the orders on the server." },
+        { "path": "/effects/waterfall/", "title": "Fetch, render, fetch again", "chip": "Fetch, render, fetch again",
+          "blurb": "A parent fetches, renders a child, and the child fetches. Time the waterfall." },
+        { "path": "/effects/odds/", "title": "How rare is the race?", "chip": "How rare is the race?",
+          "blurb": "Run hundreds of real keystroke pairs on a wired, office or mobile profile and count stale results." },
+        { "path": "/effects/verdict/", "title": "So is it a code smell?", "chip": "So is it a code smell?",
+          "blurb": "Maintainability, the AI argument, a scorecard, and what the numbers mean at your scale." }
+      ]
+    }
+  ]
+}
