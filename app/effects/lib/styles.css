@@ -36,7 +36,7 @@ a { color: var(--blue); }
 h1 { font-size: clamp(1.6rem, 5vw, 2.4rem); line-height: 1.15; margin: .4em 0 .2em; letter-spacing: -.01em; }
 h2 { font-size: 1.25rem; margin: 0 0 .25em; }
 h3 { font-size: 1rem; margin: 0 0 .2em; }
-p { margin: .4em 0 .8em; }
+p { margin: .4em 0 1em; }
 /* Body text a step softer than headings, so headings and defined terms carry the page. */
 p, li { color: var(--body); }
 p strong, li strong { color: var(--text); }
@@ -56,7 +56,8 @@ button:disabled { opacity: .5; cursor: default; }
 /* Home: a header, then one section per topic with a grid of plain cards. */
 main.home { display: flex; flex-direction: column; gap: 45px; padding-top: 45px; padding-bottom: 72px; }
 .home h1 { font-size: 2.6rem; margin: 0; letter-spacing: -.02em; }
-.home header p, .topic > p { color: var(--muted); line-height: 1.5; margin: .4em 0 0; }
+.home header p, .topic > p { color: var(--muted); line-height: 1.55; margin: .4em 0 0; }
+.home header p + p, .topic > p + p { margin-top: 1em; }  /* a clear gap between paragraphs */
 .topic h2 { margin: 0; }
 .cards { list-style: none; padding: 0; margin: 18px 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 13.5px; }
 .card { display: block; height: 100%; text-decoration: none; color: inherit; border: 1px solid var(--border); border-radius: 16px;
