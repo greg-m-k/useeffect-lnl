@@ -43,6 +43,8 @@ p strong, li strong { color: var(--text); }
 .lead { color: var(--muted); }
 strong[data-color] { color: var(--c); }
 code, pre { font-family: var(--mono); font-size: .85em; }
+/* Inline code reads as a chip: its own background and border, so it is clearly code. */
+:not(pre) > code { background: var(--code-bg); border: 1px solid var(--border); border-radius: 5px; padding: .08em .38em; color: var(--text); }
 pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; overflow: auto; margin: 0; }
 button, select, input {
   font: inherit; font-size: .9rem; color: var(--text); background: var(--surface-2);

@@ -73,6 +73,27 @@
   <div class="callout insight">A working rule. If the effect talks to something outside React, keep it and always give it a cleanup.
     If it only computes a value from props or state, compute it during render, with <code>useMemo</code> if it is expensive. If it reacts
     to something the user did, move it into the event handler.</div>
+
+  <h2>Further reading</h2>
+  <ul id="further-reading">
+    <li><a href="https://react.dev/learn/you-might-not-need-an-effect">You Might Not Need an Effect</a>, the React docs. The page
+      the slogan grew out of: each misuse in these lessons, with its replacement.</li>
+    <li><a href="https://martinfowler.com/bliki/CodeSmell.html">Code Smell</a>, Martin Fowler. A smell is a surface sign that usually, though not always,
+      points to a deeper problem. That is the useful reading of "useEffect is a code smell": look closer, then decide.</li>
+    <li><a href="https://martinfowler.com/articles/data-fetch-spa.html">Data Fetching Patterns in Single-Page Applications</a>, Juntao Qiu. Parallel data
+      fetching, fallback markup, code splitting and prefetching, with the request waterfall from lesson 4 as the starting point.</li>
+    <li><a href="https://martinfowler.com/articles/modularizing-react-apps.html">Modularizing React Applications with Established UI Patterns</a>, Juntao
+      Qiu. Moving logic out of components into plain modules, which is where most "when X changes, do Y" code belongs.</li>
+    <li><a href="https://martinfowler.com/articles/headless-component.html">Headless Component: a pattern for composing React UIs</a>, Juntao Qiu. Keeping
+      behaviour in hooks with a clear job, separate from rendering.</li>
+    <li><a href="https://martinfowler.com/articles/nonDeterminism.html">Eradicating Non-Determinism in Tests</a>, Martin Fowler. How to test asynchronous
+      behaviour without flaky timing, which is how the race test in lesson 1 controls the order of answers.</li>
+    <li><a href="https://martinfowler.com/bliki/SelfTestingCode.html">Self Testing Code</a>, Martin Fowler. The habit that turns a timing bug into a failing
+      test before it reaches users.</li>
+    <li><a href="https://martinfowler.com/bliki/DefinitionOfRefactoring.html">Definition Of Refactoring</a>, <a href="https://martinfowler.com/bliki/TechnicalDebt.html">Technical Debt</a>
+      and <a href="https://martinfowler.com/articles/is-quality-worth-cost.html">Is High Quality Software Worth the Cost?</a>, Martin Fowler. The
+      maintainability argument in general form: hard-to-follow code slows every later change.</li>
+  </ul>
 </main>
 <script type="module" src="/effects/lessons/prose.js"></script>
 </body>

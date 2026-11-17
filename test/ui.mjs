@@ -88,6 +88,13 @@ test("odds: a short mobile run counts stale results, and cleanup has none", asyn
   assert.match(await page.textContent("#large-result"), /a day/);
 });
 
+test("verdict: further reading links the React docs and Martin Fowler on code smells and data fetching", async () => {
+  await page.goto(`${BASE}/effects/verdict/`);
+  const links = await page.locator("#further-reading a").evaluateAll((as) => as.map((a) => a.href));
+  for (const url of ["https://react.dev/learn/you-might-not-need-an-effect", "https://martinfowler.com/bliki/CodeSmell.html", "https://martinfowler.com/articles/data-fetch-spa.html"])
+    assert.ok(links.includes(url), url);
+});
+
 test("every page fits a phone screen without sideways scrolling", async () => {
   await page.setViewportSize({ width: 390, height: 800 });
   for (const path of ["/", ...lessons.map((l) => l.path)]) {

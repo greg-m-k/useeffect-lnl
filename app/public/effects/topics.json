@@ -7,7 +7,7 @@
   "topics": [
     {
       "slug": "effects",
-      "emoji": "🪝",
+      "emoji": "⚛️",
       "title": "Is useEffect a Code Smell?",
       "summary": "\"useEffect is a code smell\" overstates a narrower point. Effects are the right tool for syncing with something outside React, and a source of bugs when used as a general \"when X changes, do Y\". These lessons run each misuse next to its fix, in real React against a real server, and measure the difference.",
       "source": "app/effects",
