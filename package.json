@@ -1,0 +1,27 @@
+{
+  "name": "useeffect-lnl",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 8810",
+    "build": "vite build",
+    "test": "vitest run",
+    "ui": "node --test test/ui.mjs",
+    "deploy": "vite build && wrangler deploy"
+  },
+  "dependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.70.0",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/react": "^16.3.3",
+    "@vitejs/plugin-react": "^6.3.0",
+    "jsdom": "^29.1.1",
+    "playwright-core": "^1.65.1",
+    "vite": "^8.3.8",
+    "vitest": "^5.1.0",
+    "wrangler": "^4.164.0"
+  }
+}

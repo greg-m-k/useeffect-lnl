@@ -1,0 +1,9 @@
+{
+  // One Worker: the lesson pages (built by Vite) and the API they call under /effects/api/.
+  "name": "lnl-effects",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-11-01",
+  "assets": { "not_found_handling": "404-page", "run_worker_first": ["/effects/api/*"] },
+  "durable_objects": { "bindings": [{ "name": "ORDERS", "class_name": "Orders" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Orders"] }]
+}
