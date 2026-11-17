@@ -7,7 +7,7 @@
     "build": "vite build",
     "test": "vitest run",
     "ui": "node --test test/ui.mjs",
-    "deploy": "vite build && wrangler deploy"
+    "deploy": "vite build && wrangler deploy -c dist/lnl_effects/wrangler.json"
   },
   "dependencies": {
     "react": "^19.3.1",

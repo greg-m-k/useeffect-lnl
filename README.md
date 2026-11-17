@@ -46,7 +46,7 @@ Everything is served below `/effects/`, so the topic can sit next to others on o
 
 The site and its API are one Cloudflare Worker (`lnl-effects`) with a Durable Object for the order counts.
 `npx wrangler login`, then `npm run deploy`. With Cloudflare Workers Builds connected to this repository, use
-`npm ci && npm test && npx vite build` as the build command and `npx wrangler deploy` as the deploy command.
+`npm ci && npm test && npx vite build` as the build command and `npx wrangler deploy -c dist/lnl_effects/wrangler.json` as the deploy command.
 `.github/workflows/ci.yml` runs the tests and the browser walkthrough on every push.
 
 ## How it was built
